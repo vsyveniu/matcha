@@ -1,0 +1,60 @@
+p{
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+	background-color:#e6e6e6;
+  min-width: 768px;
+}
+
+@media(min-width: 768px) {
+  .field-label-responsive {
+    padding-top: .5rem;
+    text-align: right;
+  }
+}
+
+#profile, #profile_photo {
+	display: inline-block;
+	width: 60%;
+  margin: 10px;
+}
+
+#profile_photo {
+	width: 30%;
+	float: left;
+  min-width: 300px;
+}
+
+#hidden_photos, #pag, #change_main_photo{
+	display: none;
+}
+
+.not-active {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: black;
+}
+
+.search{
+  padding: 5px;
+}
+
+.searchCard {
+  display:inline-block;
+}
+
+#search{
+  min-width: 300px;
+  margin: 10px;
+  margin-left: 0px;
+  border: 2px solid silver;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.container {
+  background-color: white;
+}

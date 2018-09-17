@@ -1,0 +1,39 @@
+<nav class="navbar navbar-dark navbar-expand-md bg-dark justify-content-center">
+    <a href="{{ path_for('home') }}" class="navbar-brand d-flex w-50 mr-auto">Matcha</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
+        <ul class="navbar-nav w-100 justify-content-center">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path_for('search') }}">Search</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path_for('user.notifications') }}">Notifications</a>
+            </li>
+        </ul>
+        {% if auth.check %}
+        <ul class="nav navbar-nav ml-auto w-100 justify-content-end" style="margin-right: 10%">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ auth.user.username }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ path_for('user.profile') }}">Profile</a>
+                    <a class="dropdown-item" href="{{ path_for('auth.password.change') }}">Change password</a>
+                    <a class="dropdown-item" href="{{ path_for('auth.signout') }}">Sign Out</a>
+                </div>
+            </div>
+        </ul>
+        {% else %}
+        <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path_for('auth.signin') }}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path_for('auth.signup') }}">Sign Up</a>
+            </li>
+        </ul>
+        {% endif %}
+    </div>
+</nav>

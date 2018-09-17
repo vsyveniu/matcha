@@ -1,0 +1,149 @@
+<?php
+
+namespace App\Config;
+use \PDO;
+
+class Dbh{
+	private $db;
+	private $host;
+	private $username;
+	private $password;
+	private $dbname;
+	private $connection;
+
+	public function connect($container) {
+		$this->db = $container['settings']['db'];
+		$this->host = $this->db['host'];
+		$this->username = $this->db['username'];
+		$this->password = $this->db['password'];
+		$this->dbname = $this->db['dbname'];
+
+		$this->connection = new PDO('mysql:host='.$this->host, $this->username, $this->password);
+		$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+		$sql = "CREATE DATABASE IF NOT EXISTS $this->dbname";
+		try{
+			$this->connection->exec($sql);
+		} catch(PDOException $e) {
+			return $e->getMessage();
+		}
+
+		$this->connection->exec("use $this->dbname");
+		return $this->createTables($container);
+	}
+
+	public function createTables($container){
+		$errors = array();
+
+		$tables = [
+			"users" => "CREATE TABLE IF NOT EXISTS `users` (
+				`id` INT (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+				`username` VARCHAR(50) NOT NULL,
+				`email` VARCHAR(100) NOT NULL,
+				`password` VARCHAR(255) NOT NULL,
+				`firstName` VARCHAR(255) NOT NULL,
+				`lastName` VARCHAR(255) NOT NULL,
+				`token` VARCHAR(128) NOT NULL DEFAULT '0',
+				`verified` VARCHAR(1) NOT NULL DEFAULT 'N',
+				`lastActivity` TIMESTAMP
+	      		)",
+
+			"user_profile" => "CREATE TABLE IF NOT EXISTS `user_profile` (
+				`id` INT (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+				`photos` TEXT,
+				`mainPhoto` TEXT,
+				`gender` TEXT,
+				`sexualPreferences` VARCHAR(50),
+				`biography` TEXT,
+				`country` TEXT,
+				`state` TEXT,
+				`sity` TEXT,
+				`dateOfBirth` DATE,
+				`user_id` INT(11) NOT NULL,
+				FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+	      	)",
+
+			"countries" => "CREATE TABLE IF NOT EXISTS `countries` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`sortname` varchar(3) NOT NULL,
+				`name` varchar(150) NOT NULL,
+				`phonecode` int(11) NOT NULL,
+				PRIMARY KEY (`id`)
+				)ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=249",
+
+			"states" => "CREATE TABLE IF NOT EXISTS `states` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`name` varchar(30) NOT NULL,
+				`country_id` int(11) NOT NULL DEFAULT '1',
+				 PRIMARY KEY (`id`)
+				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4121",
+
+			"cities" => "CREATE TABLE IF NOT EXISTS `cities` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`name` varchar(30) NOT NULL,
+				`state_id` int(11) NOT NULL,
+				PRIMARY KEY (`id`)
+				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=47577",
+
+			"visits" => "CREATE TABLE IF NOT EXISTS `visits` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`visitor_id` int(11) NOT NULL,
+				`visited_id` int(11) NOT NULL,
+				`time` TIMESTAMP,
+				PRIMARY KEY (`id`),
+				FOREIGN KEY (visitor_id) REFERENCES users(id) ON DELETE CASCADE,
+				FOREIGN KEY (visited_id) REFERENCES users(id) ON DELETE CASCADE
+			)",
+
+			"likes" => "CREATE TABLE IF NOT EXISTS `likes` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`like_id` int(11) NOT NULL,
+				`liked_id` int(11) NOT NULL,
+				`time` TIMESTAMP,
+				PRIMARY KEY (`id`),
+				FOREIGN KEY (like_id) REFERENCES users(id) ON DELETE CASCADE,
+				FOREIGN KEY (liked_id) REFERENCES users(id) ON DELETE CASCADE
+				)",
+
+			"tags" => "CREATE TABLE IF NOT EXISTS `tags` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`tag` VARCHAR(255) NOT NULL,
+				PRIMARY KEY (`id`)
+			)",
+				
+			"users_tags" => "CREATE TABLE IF NOT EXISTS `users_tags` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`tag_id` int(11) NOT NULL,
+				`user_id` int(11) NOT NULL,
+				PRIMARY KEY (`id`),
+				FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE,
+				FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+			)",
+
+			"fame_rating" => "CREATE TABLE IF NOT EXISTS `fame_rating` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`rating` int(11) NOT NULL NOT NULL DEFAULT '1',
+				`user_id` int(11) NOT NULL,
+				PRIMARY KEY (`id`),
+				FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+			)",
+		];
+
+		foreach ($tables as $table => $sql) {
+			try {
+		        $this->connection->exec($sql);
+			} catch (Exception $e) {
+				$errors[] = $e->getMessage();
+			}
+		}
+
+		//$container->geo->insertCities($this->connection);
+
+		if (!$errors)
+			return $this->connection;
+		else
+			return $errors;
+	}
+}
+
+?>
