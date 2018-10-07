@@ -19,9 +19,9 @@ class UserProfile{
 	}
 
 	public function getUserProfileById($id){
-		$sql = "SELECT users.email, users.firstName, users.lastName, user_profile.photos, user_profile.gender, user_profile.biography, 
+		$sql = "SELECT users.email, users.firstName, users.lastName,  user_profile.photos, user_profile.gender, user_profile.biography, 
 					user_profile.dateOfBirth, user_profile.mainPhoto, user_profile.id,
-					user_profile.gender, user_profile.country, user_profile.sity, user_profile.state,
+					user_profile.sexualPreferences, user_profile.country, user_profile.sity, user_profile.state,
 					TIMESTAMPDIFF(YEAR, user_profile.dateOfBirth, CURDATE()) AS age,
 					IF(TIMESTAMPDIFF(MINUTE, users.lastActivity, NOW()) > 15, users.lastActivity, 'ONLINE') as status
 					FROM `user_profile`
@@ -33,8 +33,9 @@ class UserProfile{
 		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
-	public function getAllUsersProfiles($target = NULL, $filters = NULL){
-		$sql = "SELECT users.id,users.email, users.firstName, users.lastName, user_profile.photos,
+	public function getAllUsersProfiles()
+	{
+	$sql = "SELECT users.id,users.email, users.firstName, users.lastName, user_profile.photos,
 					user_profile.gender, user_profile.biography, 
 					user_profile.dateOfBirth, user_profile.mainPhoto, user_profile.id, fame_rating.rating, user_profile.country, user_profile.state, user_profile.sity,
 					TIMESTAMPDIFF(YEAR, user_profile.dateOfBirth, CURDATE()) AS age,
@@ -105,47 +106,42 @@ class UserProfile{
 		}
 		$stmt->bindParam(':user_id', $_SESSION['user']);
 		$stmt->execute();
-
 		return $stmt->fetchAll();
 	}
 
-	public function getIntrestingProfiles($id, $filters = NULL) {
-		$profile = $this->getUserProfileByUserId($id);
-		switch ($profile['gender']) {
-			case 'Male':
-				if($profile['sexualPreferences'] == 'Heterosexual') {
-					$target['gender'] = 'Female';
-					$target['sexualPreferences'][0] = 'Heterosexual';
-					$target['sexualPreferences'][1] = 'Bisexual';
-				}
-				else if($profile['sexualPreferences'] == 'Homosexual') {
-					$target['gender'] = 'Male';
-					$target['sexualPreferences'][0] = 'Homosexual';
-					$target['sexualPreferences'][1] = 'Bisexual';
-				}
-				break;
-			
-			case 'Female':
-				if($profile['sexualPreferences'] == 'Heterosexual') {
-					$target['gender'] = 'Male';
-					$target['sexualPreferences'][0] = 'Heterosexual';
-					$target['sexualPreferences'][1] = 'Bisexual';
-				}
-				else if($profile['sexualPreferences'] == 'Homosexual') {
-					$target['gender'] = 'Female';
-					$target['sexualPreferences'][0] = 'Homosexual';
-					$target['sexualPreferences'][1] = 'Bisexual';
-				}
-				break;
-		}
 
-		return $this->getAllUsersProfiles($target, $filters);
-	}
 
-	public function save($profile) {
-		foreach($profile as $key => $value) {
-			if($value) {
-				if (!$this->getUserProfileByUserId($_SESSION['user'])) {
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public function save($profile) 
+	{
+		foreach($profile as $key => $value) 
+		{
+			if($value) 
+			{
+				if (!$this->getUserProfileByUserId($_SESSION['user'])) 
+				{
 					$sql = "INSERT INTO `user_profile`
 							(`".$key."`, `user_id`)
 							VALUES (:value, :user_id)";
@@ -175,6 +171,102 @@ class UserProfile{
 			$this->save($new);
 		}
 	}
+
+
+	public function savePosition($id, $latLng, $country, $state, $city, $method)
+	{
+		if($method == "save")
+		{
+			$sql = "INSERT INTO `user_position` (`lat`, `lng`, `user_id`, `country`, `country_code`, `state`, `city`)
+				VALUES (:lat, :lng, :user_id, :country, :country_code, :state, :city)";
+				$stmt = $this->db->prepare($sql);
+				print_r($latLng);
+				$stmt->bindParam(':lat', $latLng['lat']);
+				$stmt->bindParam(':lng', $latLng['lng']);		
+				$stmt->bindParam(':user_id', $id);		
+				$stmt->bindParam(':country', $country['country']);
+				$stmt->bindParam(':country_code', $country['country_code']);
+				$stmt->bindParam(':state', $state);
+				$stmt->bindParam(':city', $city);
+				$stmt->execute();		
+		}
+		else if($method == "update")
+		{
+			$sql = "UPDATE `user_position` SET lat = :lat, lng = :lng, country = :country, country_code = :country_code, state = :state, city = :city
+			 WHERE `user_id` = '$id'";		
+			$stmt = $this->db->prepare($sql);
+			print_r($latLng);
+			$stmt->bindParam(':lat', $latLng['lat']);
+			$stmt->bindParam(':lng', $latLng['lng']);		
+			$stmt->bindParam(':country', $country['country']);
+			$stmt->bindParam(':country_code', $country['country_code']);
+			$stmt->bindParam(':state', $state);
+			$stmt->bindParam(':city', $city);
+			$stmt->execute();		
+		}
+	}
+
+
+	
+	public function checkAutoTrigger($id)
+	{
+		$sql = "SELECT `autoset` FROM `user_position` WHERE `user_id` = '$id'";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute();
+		$res = $stmt->fetch(\PDO::FETCH_ASSOC);
+		if(!$res)
+			return 0;
+		else
+			return 1;
+	}
+	public function checkManTrigger($id)
+	{
+		$sql = "SELECT `manualset` FROM `user_position` WHERE `user_id` = '$id'";
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute();
+		$res = $stmt->fetch(\PDO::FETCH_ASSOC);
+		if(!$res)
+			return 0;
+		else
+			return 1;
+	}
+	public function checkifCoordsEqual($id, $lat, $lng)
+	{
+		$sql = "SELECT `lat` FROM `user_position` WHERE `user_id` = '$id' UNION SELECT `lng` FROM `user_position` WHERE `user_id` = '$id'"; //need to recode this statement 
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute();
+		$res = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+		if($lat == $res[0]['lat'] && $lng == $res[1]['lat'])
+		{
+			return 1;
+		}
+		else if(empty($res))
+		{
+			return 0;
+		}
+		else
+			return 2;
+	}
+
+	public function switchTrigger($id, $method)
+	{
+		if($method == "manual")
+		{
+			$sql = "UPDATE `user_position` SET `autoset` = 0 WHERE `user_id` = '$id'";
+			$sql1 = "UPDATE `user_position` SET `manualset` = 1 WHERE `user_id` = '$id'";
+		}
+		else if($method == "auto")
+		{
+			$sql = "UPDATE `user_position` SET `manualset` = 0 WHERE `user_id` = '$id'";
+			$sql1 = "UPDATE `user_position` SET `autoset` = 1 WHERE `user_id` = '$id'";
+		}
+		$stmt = $this->db->prepare($sql);
+		$stmt->execute();
+		$stmt = $this->db->prepare($sql1);
+		$stmt->execute();
+	}
+
+
 }
 
 ?>

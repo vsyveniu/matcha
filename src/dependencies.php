@@ -55,6 +55,10 @@ $container['likes'] = function($container) {
 	return new \App\Models\Likes($container);
 };
 
+$container['search'] = function($container) {
+	return new \App\Models\Search($container->db);
+};
+
 $container['tag'] = function($container) {
 	return new \App\Models\Tag($container);
 };
@@ -114,6 +118,9 @@ $container['TestController'] = function($container) {
 $container['geo'] = function() {
 	return new \App\Config\Geo();
 };
+$container['people'] = function() {
+	return new \App\Config\People();
+};
 
 $container['GeoController'] = function($container) {
 	return new \App\Controllers\GeoController($container);
@@ -134,3 +141,5 @@ $container['ShowProfileController'] = function($container) {
 $container['TagsController'] = function($container) {
 	return new \App\Controllers\User\TagsController($container);
 };
+
+

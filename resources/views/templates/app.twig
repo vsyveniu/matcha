@@ -11,6 +11,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 
     <link rel="stylesheet" href="{{ base_url() }}/public/css/style.css">
+    <link rel="stylesheet" href="{{ base_url() }}/public/css/animate.css">
+
+    <link rel="stylesheet" href="{{ base_url() }}/public/js/ui/jquery-ui.css">
 
     <title>Matcha</title>
   </head>
@@ -19,26 +22,35 @@
 
   	<div class="container">
       {% include 'templates/partials/flash.twig' %}
+      {% include 'templates/partials/sort.twig' %}
   		{% block content %}{% endblock %}
   	</div>
 
+      
+   
     {% block javascript %}
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <!--<script type="text/javascript">
+        var trigger = <?php echo $_SESSION['trigger']; ?>;
+      </script>-->
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+      <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
       <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-      <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
       <script src="{{base_url()}}/public/js/myScripts.js"></script>
-      <script src="{{base_url()}}/public/js/geo.js"></script>
       <script src="{{base_url()}}/public/js/multiple-select.js"></script>
       <script src="{{base_url()}}/public/js/like.js"></script>
       <script src="{{base_url()}}/public/js/main.js"></script>
       <script src="{{base_url()}}/public/js/uploadPhotos.js"></script>
-      <script src="{{base_url()}}/public/js/geo.js"></script>
       <script src="{{base_url()}}/public/js/tags.js"></script>
+      <script src="{{base_url()}}/public/js/searchGeo.js" ></script>
+      <script src="{{base_url()}}/public/js/geo.js" ></script>
+      <script src="{{base_url()}}/public/js/ui/jquery-ui.js"></script>
+      <script src="{{base_url()}}/public/js/polzun.js"></script>
+      <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
     {% endblock %}
   </body>
 </html>

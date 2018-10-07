@@ -29,3 +29,8 @@
 </div>
 
 {% endblock %}
+{% block javascript %}
+    {{ parent() }}
+           <script src="{{base_url()}}/public/js/main.js"></script>
+{% endblock %}
+     

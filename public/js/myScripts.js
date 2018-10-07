@@ -7,7 +7,7 @@ $(document).ready(function() {
 				now: Math.floor(Date.now() * 0.001)
 			},
 			success: function(response){
-				console.log(response);
+				//console.log(response);
 			}
 		}); 
 	}, 3000);

@@ -4,6 +4,7 @@ p{
 }
 
 body {
+  width: 100%;
 	background-color:#e6e6e6;
   min-width: 768px;
 }
@@ -57,4 +58,98 @@ body {
 
 .container {
   background-color: white;
+  width: 100%;
 }
+
+#map
+{
+  width: 100%;
+  height: 400px;
+}
+
+#map_search
+{
+  width: 100%;
+  height: 400px;
+}
+.choose_status_wrapper
+{
+  display: flex;
+  width: 60%;
+}
+.choose_status
+{
+  width: 300px;
+  margin-left: 3%;
+  margin-top: 15px;
+}
+.sort, .filter
+{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.sort_checkbox
+{
+  display: flex;
+  width: 15%;
+  justify-content: space-around;
+}
+#hidden_fields
+{
+  display: none;
+}
+
+.slider-range_wrapper
+{
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+#show_options
+{
+
+}
+#hide_options
+{
+  display: none;
+}
+#gallery_response
+{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid coral;
+  margin-bottom: 100px;
+  transition-property: visibility;
+  transition-duration: 3s;
+}
+
+.user_card_wrapper
+{
+   min-width: 180px;
+  min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+    margin-top: 15px; 
+    margin-left: 15px; 
+}
+.user_card_img_wrapper
+{
+  min-width: 100px;
+  min-height: 100px;
+  
+}
+.user_card_img_link
+{
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.user_card_img_link img
+{
+  width: 180px;
+  height: 180px;
+
+}
+

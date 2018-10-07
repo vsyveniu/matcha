@@ -6,12 +6,110 @@
         <h3>Filters</h3>
         <hr>
         <form action="{{ path_for('search') }}" method="post" id="search_form">
-            
-            <div class="form-group row">
-                <label class="col-lg-3 col-form-label form-control-label">Age min/max:</label>
-                <div class="col-lg-3">
-                    <select class="form-control" name="min_age">
-                        <option selected="selected">18</option>
+            <p>Filter by</p>
+            <section class="filter">
+                <label for "filter_age">age</label>
+                <div class="col-lg-1" id="filter_age">
+                    <select class="form-control" name="filter_age" id="filter_age_select">
+                        <option selected="selected">none</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                        <option>24</option>
+                        <option>25</option>
+                        <option>26</option>
+                        <option>27</option>
+                        <option>28</option>
+                        <option>29</option>
+                        <option>30</option>
+                        <option>31</option>
+                        <option>32</option>
+                        <option>33</option>
+                        <option>34</option>
+                        <option>35</option>
+                        <option>36</option>
+                        <option>37</option>
+                        <option>38</option>
+                        <option>39</option>
+                        <option>40</option>
+                        <option>41</option>
+                        <option>42</option>
+                        <option>43</option>
+                        <option>44</option>
+                        <option>45</option>
+                        <option>46</option>
+                        <option>47</option>
+                        <option>48</option>
+                        <option>49</option>
+                        <option>50</option>
+                        <option>51</option>
+                        <option>52</option>
+                        <option>53</option>
+                        <option>54</option>
+                        <option>55</option>
+                        <option>56</option>
+                        <option>57</option>
+                        <option>58</option>
+                        <option>59</option>
+                        <option>60</option>
+                        <option>61</option>
+                        <option>62</option>
+                        <option>63</option>
+                        <option>64</option>
+                        <option>65</option>
+                        <option>66</option>
+                        <option>67</option>
+                        <option>68</option>
+                        <option>69</option>
+                        <option>70</option>
+                        <option>71</option>
+                        <option>72</option>
+                        <option>73</option>
+                        <option>74</option>
+                        <option>75</option>
+                        <option>76</option>
+                        <option>77</option>
+                        <option>78</option>
+                        <option>79</option>
+                        <option>80</option>
+                        <option>81</option>
+                        <option>82</option>
+                        <option>83</option>
+                        <option>84</option>
+                        <option>85</option>
+                        <option>86</option>
+                        <option>87</option>
+                        <option>88</option>
+                        <option>89</option>
+                        <option>90</option>
+                        <option>91</option>
+                        <option>92</option>
+                        <option>93</option>
+                        <option>94</option>
+                        <option>95</option>
+                        <option>96</option>
+                        <option>97</option>
+                        <option>98</option>
+                        <option>99</option>
+                    </select>
+                </div>
+
+             <div class="col-lg-2">
+                 <label for="filter by location"</label>
+                  
+                        <select class="form-control" name="location_filter">
+                           <option>none</option>
+                           <option>City</option>
+                           <option>State</option>
+                           <option>Country</option>     
+                        </select>
+                </div>
+                 <div class="col-lg-1" id="filter_fame">
+                    <select class="form-control" name="filter_fame" id="filter_fame_select">
+                        <option selected="selected">none</option>
                         <option>19</option>
                         <option>20</option>
                         <option>21</option>
@@ -95,253 +193,96 @@
                         <option>99</option>
                     </select>
                 </div>
-                <div class="col-lg-3">
-                    <select class="form-control" name="max_age">
-                        <option>18</option>
-                        <option>19</option>
-                        <option>20</option>
-                        <option>21</option>
-                        <option>22</option>
-                        <option>23</option>
-                        <option>24</option>
-                        <option>25</option>
-                        <option>26</option>
-                        <option>27</option>
-                        <option>28</option>
-                        <option>29</option>
-                        <option>30</option>
-                        <option>31</option>
-                        <option>32</option>
-                        <option>33</option>
-                        <option>34</option>
-                        <option>35</option>
-                        <option>36</option>
-                        <option>37</option>
-                        <option>38</option>
-                        <option>39</option>
-                        <option>40</option>
-                        <option>41</option>
-                        <option>42</option>
-                        <option>43</option>
-                        <option>44</option>
-                        <option>45</option>
-                        <option>46</option>
-                        <option>47</option>
-                        <option>48</option>
-                        <option>49</option>
-                        <option>50</option>
-                        <option>51</option>
-                        <option>52</option>
-                        <option>53</option>
-                        <option>54</option>
-                        <option>55</option>
-                        <option>56</option>
-                        <option>57</option>
-                        <option>58</option>
-                        <option>59</option>
-                        <option>60</option>
-                        <option>61</option>
-                        <option>62</option>
-                        <option>63</option>
-                        <option>64</option>
-                        <option>65</option>
-                        <option>66</option>
-                        <option>67</option>
-                        <option>68</option>
-                        <option>69</option>
-                        <option>70</option>
-                        <option>71</option>
-                        <option>72</option>
-                        <option>73</option>
-                        <option>74</option>
-                        <option>75</option>
-                        <option>76</option>
-                        <option>77</option>
-                        <option>78</option>
-                        <option>79</option>
-                        <option>80</option>
-                        <option>81</option>
-                        <option>82</option>
-                        <option>83</option>
-                        <option>84</option>
-                        <option>85</option>
-                        <option>86</option>
-                        <option>87</option>
-                        <option>88</option>
-                        <option>89</option>
-                        <option>90</option>
-                        <option>91</option>
-                        <option>92</option>
-                        <option>93</option>
-                        <option>94</option>
-                        <option>95</option>
-                        <option>96</option>
-                        <option>97</option>
-                        <option>98</option>
-                        <option selected="selected">99</option>
-                    </select>
+                <div class="sort_checkbox"> 
+                    <p>common tags</p>
+                    <input type="checkbox" name="filter_tags" value="tags">
+                </div>  
+            </section>
+            <section class="sort">
+                <label for "sort">Sort by</label>
+                <div class="sort_checkbox">
+                    <p>age</p>
+                    <input type="checkbox" name="sort_age" value="age">
+                </div class="sort_checkbox">
+                <div class="sort_checkbox">
+                    <p>fame</p>
+                    <input type="checkbox" name="sort_fame" value="fame">
                 </div>
+                <div class="sort_checkbox"> 
+                    <p>tags</p>
+                    <input type="checkbox" name="sort_tags" value="tags">
+                </div> 
+            </section>
+          <button name="show_detailed" id="show_options" v-on:click.prevent=showDetailed()>Show options</button> 
+          <button name="hide_detailed" id="hide_options" v-on:click.prevent=showDetailed()>Hide options</button> 
+
+            <section id="hidden_fields">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Age min/max:</label>
+                    <div class="col-lg-3">
+                         <input class="form-control" name="age_gap" id="age_gap">
+                        <div class = "slider-range_wrapper" id="slider-range_age"></div>
+
+                 </div>       
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Minimum fame rating:</label>
+                    <div class="col-lg-7">
+
+                    <input class="form-control" name="fame_gap" id="fame_gap">
+                    <div class = "slider-range_wrapper" id="slider-range_fame"></div>
+
+                </div>
+             </div>
+               
+
+
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Tags:</label>
+                    <div class="col-lg-7">
+                        <select class="form-control" multiple id="tags-select" name="tags-select[]">
+                            {% for tag in tags %}
+                                <option value="{{tag.tag}}">{{tag.tag}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+
+            <div class="map_section">
+                <div id="map_search"></div>
+                <div id="map_message"></div>
+                <div id="lat_lng"></div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-lg-3 col-form-label form-control-label">Minimum fame rating:</label>
-                <div class="col-lg-7">
-                    <select class="form-control" name="min_fame">
-                        <option selected="selected">1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                        <option>15</option>
-                        <option>16</option>
-                        <option>17</option>
-                        <option>28</option>
-                        <option>18</option>
-                        <option>19</option>
-                        <option>20</option>
-                        <option>21</option>
-                        <option>22</option>
-                        <option>23</option>
-                        <option>24</option>
-                        <option>25</option>
-                        <option>26</option>
-                        <option>27</option>
-                        <option>28</option>
-                        <option>29</option>
-                        <option>30</option>
-                        <option>31</option>
-                        <option>32</option>
-                        <option>33</option>
-                        <option>34</option>
-                        <option>35</option>
-                        <option>36</option>
-                        <option>37</option>
-                        <option>38</option>
-                        <option>39</option>
-                        <option>40</option>
-                        <option>41</option>
-                        <option>42</option>
-                        <option>43</option>
-                        <option>44</option>
-                        <option>45</option>
-                        <option>46</option>
-                        <option>47</option>
-                        <option>48</option>
-                        <option>49</option>
-                        <option>50</option>
-                        <option>51</option>
-                        <option>52</option>
-                        <option>53</option>
-                        <option>54</option>
-                        <option>55</option>
-                        <option>56</option>
-                        <option>57</option>
-                        <option>58</option>
-                        <option>59</option>
-                        <option>60</option>
-                        <option>61</option>
-                        <option>62</option>
-                        <option>63</option>
-                        <option>64</option>
-                        <option>65</option>
-                        <option>66</option>
-                        <option>67</option>
-                        <option>68</option>
-                        <option>69</option>
-                        <option>70</option>
-                        <option>71</option>
-                        <option>72</option>
-                        <option>73</option>
-                        <option>74</option>
-                        <option>75</option>
-                        <option>76</option>
-                        <option>77</option>
-                        <option>78</option>
-                        <option>79</option>
-                        <option>80</option>
-                        <option>81</option>
-                        <option>82</option>
-                        <option>83</option>
-                        <option>84</option>
-                        <option>85</option>
-                        <option>86</option>
-                        <option>87</option>
-                        <option>88</option>
-                        <option>89</option>
-                        <option>90</option>
-                        <option>91</option>
-                        <option>92</option>
-                        <option>93</option>
-                        <option>94</option>
-                        <option>95</option>
-                        <option>96</option>
-                        <option>97</option>
-                        <option>98</option>
-                        <option>99</option>
-                        <option>100</option>
-                    </select>
+            <section class="choose_status_wrapper">
+                <div class="choose_status" id="chosen_country">
                 </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-lg-3 col-form-label form-control-label" for="country">Country:</label>
-                <div class="col-lg-7">
-                    <select class="form-control" id="country" name="country">
-                        <option selected value>Select Country</option>
-                    </select>
+                 <div class="choose_status"id="chosen_state">
                 </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-lg-3 col-form-label form-control-label" for="state">State:</label>
-                <div class="col-lg-7">
-                    <select class="form-control" id="state" name="state">
-                        <option selected value>Select State</option>
-                    </select>
+                 <div class="choose_status" id="chosen_city">
                 </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-lg-3 col-form-label form-control-label" for="city">City:</label>
-                <div class="col-lg-7">
-                    <select class="form-control" id="city" name="city">
-                         <option selected value>Select City</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-lg-3 col-form-label form-control-label">Tags:</label>
-                <div class="col-lg-7">
-                    <select class="form-control" multiple id="tags-select" name="tags-select[]">
-                        {% for tag in tags %}
-                            <option value="{{tag.tag}}">{{tag.tag}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <input class="btn btn-lg btn-primary btn-block" value="Submit" type="submit">
+            </section>    
+           </section>
+           
+      
+        </section>
+            <input class="btn btn-lg btn-primary btn-block" value="Submit" type="submit" id="submit_search" v-on:click.prevent=sendFormdata()>
         </form>
+        <div id="form_status"></div>
     </div>
 
+    
+    <div id="showScroll"></div>
+    <section class="fuck" id="gallery_response">
 
-    {% for profile in intresting_profiles %}
-        <div class="card searchCard" style="width:180px">
-            <a href="{{ base_url() }}/show?profile={{ profile.id }}"><img src="{{ base_url() }}/../app/users_photos/{{ profile.mainPhoto }}" class="float-left search" alt="No photo" width="180" height="140"></a>
-            <div class="card-body">
-               <p>{{ profile.firstName }} {{ profile.age }}</p>
-               {{ profile.status }}
-            </div>
-        </div>
-    {% endfor %} 
-  
+    </section>
 {% endblock %}
+{% block javascript %}
+    {{ parent() }}
+
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWy09HNMsO_0vvizAktk85EUvjW0kDTVg&libraries=places&callback=initMapSearch" async></script>
+    <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+    
+{% endblock %}
+

@@ -25,3 +25,14 @@ Run this command in the application directory to run the test suite
 	php composer.phar test
 
 That's it! Now go build something cool.
+
+
+troubles, bugs, happend shit
+
+1)user/profile.  when adding tags, if push enter instead of  click add tags everything fucks up into void blank
+
+2)map   if geolocation is forbidden js cannot read lat lng from navigator (obviously) Need to set couple if - elses
+
+3)map geocoding can't find nothing in crimea, my fault?
+
+4)initmap is not a fucking function (not permanent)

@@ -115,3 +115,37 @@ var notification = new Vue({
 		}
 	}
 });
+
+
+window.onload = function()
+{
+	$.ajax({
+  url: 'https://tinyfac.es/api/users',
+  dataType: 'json',
+  success: function(data) {
+      console.log(data);
+  }
+});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
