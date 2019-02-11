@@ -71,6 +71,16 @@ class Validator {
 	public function failed(){
 		return !empty($this->errors);
 	}
+
+	public function validateNumbers($request)
+	{
+		if(preg_match('[0-9]', $request))
+			return true;
+		return false;
+	
+	}
+
+
 }
 
 ?>

@@ -1,0 +1,30 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+
+<div id="toTop">^ Back to Top</div>
+ {% if visits %}
+        <div><button class="button is-info button_history" id="delete_all_visits">Clear history</button></div>
+  {% endif %}      
+  <div id="visits" class="browsing_history"></div>
+<!--<div id="visits" class="browsing_history">
+    {% if visits %}
+        <div><button class="button is-info button_history" id="delete_all_visits">Clear history</button></div>
+        {% for key,value in visits %}
+        <div class="box">
+            You watched <a href="{{ base_url() }}/show?profile={{value['visited_id']}}">{{value['firstName']}} {{value['lastName']}} </a> &nbsp; profile {{value['time']}}
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>-->
+
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <script>
+      var notifications = '{{ notifications }}';
+    </script>
+    <script src="{{base_url()}}/public/js/history.js"></script>
+
+{% endblock %}
+

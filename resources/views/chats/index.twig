@@ -1,0 +1,19 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+
+<div id="chats" class="chat_list_container">
+    {% if chats %}
+        {% for key,value in chats %}
+        <div class="chat_list box">
+            <div>{#Chat with <a href="{{ base_url() }}/show?profile={{value['visited_id']}}">{{value['firstName']}} {{value['lastName']}} </a>profile {{value['time']}}#}</div>
+            <div><a class="chat_list_profile_link" href="{{path_for('showProfile')}}?profile={{value['id']}}">
+            	<img src="app/users_photos/{{value['mainPhoto']}}" width="50" height="50" alt="lorem">
+            </a></div>	
+            <div><a class="button is-info chat_link" href="{{path_for('chats')}}/chat/{{value['chanel']}}">Start conversation</a></div>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock %}

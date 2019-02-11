@@ -16,6 +16,19 @@ class SendEmail {
 		$this->send($request->getParam('email'), $message, $subject);
 	}
 
+	public function reinit ($name, $mail, $password) {
+		$message = '<html><body>';
+		$message .= 'Hello <b>'.$name.'</b><br>';
+		$message .= 'You forgot your password. What a shame.'.'<br>';
+		$message .= 'Please click on the link below to restore your password:'.'<br>';
+		$message .= '<a href="http://localhost:8080/matcha/auth/password/restore?username='.$name.'&hash='.md5($name).'&password='.password_hash($password, PASSWORD_BCRYPT).'">Click here to restore your password</a>';
+		$message .= "</body></html>";
+		$subject = 'Restoring password';
+		$this->send($mail, $message, $subject);
+	}
+
+
+
 	public function visitedNotification($profile){
 		$message = '<html><body>';
 		$message .= 'Hello <b>'.$profile['firstName'].'</b><br>';
@@ -29,26 +42,11 @@ class SendEmail {
 		
 	}
 
-	/*public function passwordRecovery($randomPass) {
-		$this->message = 'Hello '.$this->uname.'<br>';
-		$this->message .= 'Youre new password is '.$randomPass.'<br>';
-		$this->subject = 'Password recovery on camgru';
-		$this->send();
-	}
-
-	public function commet_message () {
-		$this->message = 'Hi '.$this->uname.'</b><br>';
-		$this->message .= 'You have new comment under youre photo';
-		$this->subject = 'Comment under youre pfoto';
-		$this->send();
-	}*/
-
 	private function send($email, $message, $subject) {
 		$headers  = "Content-type: text/html; charset=windows-1251 \r\n"; 
 		$headers .= "From: ".self::$from."\r\n"; 
 		$headers .= "Reply-To: reply-to@example.com\r\n";
-		mail('somefellavs@gmail.com', $subject, $message, $headers);
-		//mail($email, $subject, $message, $headers);
+		mail($email, $subject, $message, $headers);
 	}
 }
 

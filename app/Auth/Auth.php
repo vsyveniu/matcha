@@ -15,6 +15,7 @@ class Auth {
 	}
 
 	public function check(){
+
 		return isset($_SESSION['user']);
 	}
 
@@ -33,6 +34,10 @@ class Auth {
 
 	public function logout() {
 		unset($_SESSION['user']);
+	}
+
+	public function is_filled() {
+		return $this->container->userProfile->is_filled($_SESSION['user']);
 	}
 }
 

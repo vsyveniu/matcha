@@ -1,0 +1,18 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+
+<article class="blacklist_container">
+  <div class=" content">
+   {% for key in list %}
+      {% if key.id > 1000 %}
+       <div class="blacklist_item"><img src="{{ base_url() }}/app/users_photos/{{ key.mainPhoto }}"></img> <div class="blacklist_name"><p>{{ key.firstName }}</p> <p>{{ key.lastName}}</p></div> <form name="black_form" enctype="multipart/form-data" action="{{ path_for('user.blacklist') }}" method="post"><input name="blacklist_name" value="{{ key.id }}" type="hidden"><input name="blacklist_submit" value="unblock" type="submit" class="button is-primary"></form></div>
+       {% else %}
+       <div class="blacklist_item"><img src="{{ key.mainPhoto }}"></img> <div class="blacklist_name"><p>{{ key.firstName }}</p> <p>{{ key.lastName}}</p></div> <form name="black_form" enctype="multipart/form-data" action="{{ path_for('user.blacklist') }}" method="post">
+        <input name="blacklist_name" value="{{ key.id }}" type="hidden"><input name="blacklist_submit" value="unblock" type="submit" class="button is-primary"></form></div>
+        {% endif %}
+   {% endfor %}
+  </div>
+</article>
+
+{% endblock %}

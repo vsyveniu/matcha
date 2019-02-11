@@ -45,6 +45,12 @@ class Photos {
 
 		return $photos;		
 	}
+
+
+	public function get_main($id)
+	{
+		$sql = "SELECT mainPhoto FROM user_profile WHERE user_id = '$id'";
+	}
 }
 
 ?>

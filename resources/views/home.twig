@@ -1,4 +1,11 @@
 {% extends 'templates/app.twig' %}
 
 {% block content %}
+
+{% if user == NULL %}
+<div class="get_started_block"><a class="button is-link get_started_link" href="{{ base_url() }}/auth/signin" >get started</a></div>
+{% endif %}
+{% if user != NULL %}
+<div class="get_started_block"><a class="button is-link get_started_link" href="{{ base_url() }}/search" >start browsing</a></div>
+{% endif %}
 {% endblock %}

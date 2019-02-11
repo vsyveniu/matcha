@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit32df003ce1d9a5eed0a948e1292191b6
+class ComposerStaticInitdba17118e2dafcb56c077a0a2c171897
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -14,6 +14,7 @@ class ComposerStaticInit32df003ce1d9a5eed0a948e1292191b6
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -54,6 +55,7 @@ class ComposerStaticInit32df003ce1d9a5eed0a948e1292191b6
         ),
         'P' => 
         array (
+            'Pusher\\' => 7,
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
@@ -168,6 +170,10 @@ class ComposerStaticInit32df003ce1d9a5eed0a948e1292191b6
         'Ratchet\\' => 
         array (
             0 => __DIR__ . '/..' . '/cboden/ratchet/src/Ratchet',
+        ),
+        'Pusher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pusher/pusher-php-server/src',
         ),
         'Psr\\Log\\' => 
         array (
@@ -710,10 +716,10 @@ class ComposerStaticInit32df003ce1d9a5eed0a948e1292191b6
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit32df003ce1d9a5eed0a948e1292191b6::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit32df003ce1d9a5eed0a948e1292191b6::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit32df003ce1d9a5eed0a948e1292191b6::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit32df003ce1d9a5eed0a948e1292191b6::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitdba17118e2dafcb56c077a0a2c171897::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitdba17118e2dafcb56c077a0a2c171897::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitdba17118e2dafcb56c077a0a2c171897::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitdba17118e2dafcb56c077a0a2c171897::$classMap;
 
         }, null, ClassLoader::class);
     }

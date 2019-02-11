@@ -1,0 +1,24 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+
+<article class="chat_container">
+	<div id="chat_button"></div>
+	<div id ="chat_response" class="chat_resp">
+		
+
+	</div>
+	<div id="messages" >
+	</div>
+	<div id="input" class="text_form">
+	    <p><textarea class="textarea" placeholder="type your message here..." rows="10" cols="45" name="text" id="message"></textarea></p>
+	    <p><input class="send_message button is-primary" type="submit" value="Send message" id="send_message"></p>
+	</div>
+	
+</article>
+{% endblock %}
+ {% block javascript %}
+    {{ parent() }}
+
+    <script src="{{base_url()}}/public/js/chat.js"></script>
+ {% endblock %}

@@ -1,28 +1,31 @@
 {% extends 'templates/app.twig' %}
 
 {% block content %}
-<div class="container-fluid bg-light py-3">
-    <div class="row">
-        <div class="col-md-6 mx-auto">
-            <div class="card card-body">
-                <h3 class="text-center mb-4">Sign in</h3>
+<div class="signin_wrapper">
+
+                <h3 class="sign_in_form_label">Sign in</h3>
                 <form action="{{ path_for('auth.signin') }}" method="post" autocomplete="off">
-                    <div class="form-group">
-                        <input class="form-control{{errors.username ? ' is-invalid' : '' }}" placeholder="Username" name="username" type="text" value="{{ old.username }}">
-                        {% if errors.username %}
-                            <div class="invalid-feedback">{{ errors.username }}</div>
-                        {% endif %}
+                    <div class="field">
+                        <div class="control">
+                             <label>Username must contain only latinic letters or digits</label>
+                            <input class="form-control{{errors.username ? ' is-invalid' : '' }} input" required="required" pattern="[a-zA-Z0-9]+" placeholder="Username" name="username" type="text" value="{{ old.username }}">
+                            {% if errors.username %}
+                                <div class="invalid-feedback">{{ errors.username }}</div>
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input class="form-control{{errors.password ? ' is-invalid' : '' }}" placeholder="Password" name="password" value="" type="password">
-                        {% if errors.password %}
-                            <div class="invalid-feedback">{{ errors.password }}</div>
-                        {% endif %}
+                    <div class="field">
+                        <div class="control">
+                            <label >Password must contain at least 1 difit, 1 uppercase letter and 1 lowercase letter, it must be 6+ symbols</label>
+                            <input class="form-control{{errors.password ? ' is-invalid' : '' }} input" required="required" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,}$"placeholder="Password" name="password" value="" type="password">
+                            {% if errors.password %}
+                                <div class="invalid-feedback">{{ errors.password }}</div>
+                            {% endif %}
+                         </div>   
                     </div>
-                    <input class="btn btn-lg btn-primary btn-block" value="Sign in" type="submit">
+                    <input class="button is-primary" value="Sign in" type="submit">
                 </form>
-            </div>
-        </div>
-    </div>
+ 
+                <a href="{{ path_for('auth.reinit') }}">i forgot a password</a>
 </div>        
 {% endblock %}

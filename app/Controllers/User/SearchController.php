@@ -5,19 +5,31 @@ namespace App\Controllers\User;
 use App\Controllers\Controller;
 
 class SearchController extends Controller{
-	public function search($request, $response){
+	public function search($request, $response)
+	{
+		if(!$this->auth->is_filled()){
+			return $this->view->render($response, 'search_basic.twig');
+		}
+
+		$age_max = $this->container->search->get_age_max();
+		$fame_max = $this->container->search->get_fame_max();
+		$age_max = (int)$age_max;
+		$fame_max = (int)$fame_max;
+
 		return $this->view->render($response, 'search.twig', [
-			'tags' => $this->container->tag->get_all_tags()]);
+			'tags' => $this->container->tag->get_all_tags(),
+			'age' => $age_max,
+			'fame' => $fame_max
+		]);
 		
 	}
 
-	public function filters($request, $response) {
 
+
+
+	public function filters($request, $response) {
 		$id = $_SESSION['user'];
-		if(isset($_POST['method']) && $_POST['method'] == "showGallery")
-		{
-			return $this->getIntrestingProfiles($_SESSION['user'], $filters = NULL);
-		}
+
 		if (isset($_POST['method']) && $_POST['method'] == "setAutoPosition")
 		{	
 			$dataFromBase = $this->container->search->getPositionFromBase($id);
@@ -58,7 +70,7 @@ class SearchController extends Controller{
 			$country = $this->container->UserProfileController->parseCountry($data);
 			$state = $this->container->UserProfileController->parseState($data);
 			$city = $this->container->UserProfileController->parseCity($data);
-			$res['country'] = $country['country'];
+			$res['country'] = htmlspecialchars($country['country']);
 			$res['country_code'] = $country['country_code'];
 			$res['state'] = $state;
 			$res['city'] = $city;
@@ -66,13 +78,76 @@ class SearchController extends Controller{
 			return $response->withJson($res);
 
 		}
-		else if (isset($_POST['method']) && $_POST['method'] == "sendData")
+		if(isset($_POST['method']) && $_POST['method'] == "fuck")
 		{
-			
-		$filters = $request->getParsedBody();
+			$filters = $request->getParsedBody();
+			return ;
+		}
+		if(isset($_POST['method']) && $_POST['method'] == "showGalleryBasic")
+		{
+			return $this->basic_getIntrestingProfiles();
+		}
+		if(isset($_POST['method']) && $_POST['method'] == "showGallery")
+		{
+			$errors = 0;
+			$filters = $request->getParsedBody();
+		
 
-
-		return ($this->getIntrestingProfiles($_SESSION['user'], $filters));
+			if($filters['location_filter'] == "none" || $filters['location_filter'] == "City" || $filters['location_filter'] == "State" || $filters['location_filter'] == "Country")
+				;
+			else
+				$errors = 1;
+			if($filters['sort_fame'] == "none" || $filters['sort_fame'] == "ascending" || $filters['sort_fame'] == "descending")
+				;
+			else
+				$errors = 1;
+			if($filters['sort_tags'] == "more" || $filters['sort_tags'] == "less")
+				;
+			else
+				$errors = 1;
+			if($filters['sort_age'] == "none" || $filters['sort_age'] == "ascending" || $filters['sort_age'] == "descending")
+				;
+			else
+				$errors = 1;
+			if($filters['filter_age'] == "none" || is_numeric($filters['filter_age']))
+				;
+			else
+				$errors = 1;
+			if($filters['filter_fame'] == "none" || is_numeric($filters['filter_fame']))
+				;
+			else
+				$errors = 1;
+			if($filters['age_gap'] == "none" || preg_match('(^\d{1,3}\s{1}[-]{1}\s{1}\d{1,3}$)', $filters['age_gap']))
+				;
+			else
+				$errors = 1;
+			if($filters['fame_gap'] == "none" || preg_match('(^\d{1,9}\s{1}[-]{1}\s{1}\d{1,9}$)', $filters['fame_gap']))
+				;
+			else
+				$errors = 1;
+			if($errors == 1)
+			{
+				
+				return $response->withJson("error");
+			}
+			else
+			{
+				$filters['country'] = htmlspecialchars($filters['country']);
+				$filters['city'] = htmlspecialchars($filters['city']);
+				$filters['state'] = htmlspecialchars($filters['state']);
+				return $this->getIntrestingProfiles($_SESSION['user'], $filters);
+			}	
+		}
+		if(isset($_POST['method']) && $_POST['method'] == "getMaxValues")
+		{
+			$res = [];
+			$age_max = $this->container->search->get_age_max();
+			$fame_max = $this->container->search->get_fame_max();
+			$age_max = (int)$age_max;
+			$fame_max = (int)$fame_max;
+			array_push($res, $age_max);
+			array_push($res, $fame_max);
+			return $response->withJson($res);
 		}
 		else
 			return $response->withRedirect($this->router->pathFor('search'));
@@ -81,7 +156,7 @@ class SearchController extends Controller{
 	public function getGeopluginData()
 	{
 				$res = [];
-				$ip_adress = $_SERVER['HTTP_CLIENT_IP'];  ///not sure about it, but remote_addr(seems like most reasonable) isn't working
+				$ip_adress = $_SERVER['HTTP_CLIENT_IP']; 
 				$str = 'http://www.geoplugin.net/php.gp?ip='.$ip_adress;
 				$data = unserialize(file_get_contents($str));
 				if(!empty($data['geoplugin_latitude']) && !empty($data['geoplugin_longitude']))
@@ -104,13 +179,27 @@ class SearchController extends Controller{
 			return ($res);	
 	}
 
-	public function getIntrestingProfiles($id, $filters) {
+	public function basic_getIntrestingProfiles()
+	 {
+	
+		$id = $_SESSION['user'];
 
+		$filtered = $this->container->BasicSearch->getFiltered($id);
+		return $filtered;
+
+	}
+
+	public function getIntrestingProfiles($id, $filters) {
+	
+		$position = NULL;
 		$id = $_SESSION['user'];
 		$profile = $this->container->userProfile->getUserProfileByUserId($id);
 		if($filters == NULL)
 			$position = $this->getGeopluginData();
 		$target = [];
+
+
+	
 
 		$filter = $this->parseFilters($position, $filters);
 		$sort = $this->parseSort($filters);
@@ -119,6 +208,7 @@ class SearchController extends Controller{
 		if (empty($profile))
 		{
 			$target['gender'] = 'All';
+			$target['sexualPreferences'] = 'Bisexual';
 		}
 		else
 		{
@@ -192,9 +282,9 @@ class SearchController extends Controller{
 	public function parseSort($filters)
 	{
 		$result = [];
-		isset($filters['sort_age']) ? $result['age'] = 1 : 0;
-		isset($filters['sort_fame']) ? $result['fame'] = 1 : 0;
-		isset($filters['sort_tags']) ? $result['tags'] = 1 : 0;
+		isset($filters['sort_age']) && $filters['sort_age'] != "none" ? $result['sort_age'] = $filters['sort_age'] : $result['sort_age'] = 0;
+		isset($filters['sort_fame']) && $filters['sort_fame'] != "none" ? $result['sort_fame'] = $filters['sort_fame'] : $result['sort_fame'] = 0;
+		isset($filters['sort_tags']) ? $result['sort_tags'] = $filters['sort_tags'] : 0;
 		return $result;
 	}
 

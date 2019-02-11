@@ -1,39 +1,51 @@
-<nav class="navbar navbar-dark navbar-expand-md bg-dark justify-content-center">
-    <a href="{{ path_for('home') }}" class="navbar-brand d-flex w-50 mr-auto">Matcha</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
-        <ul class="navbar-nav w-100 justify-content-center">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ path_for('search') }}">Search</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path_for('user.notifications') }}">Notifications</a>
-            </li>
-        </ul>
-        {% if auth.check %}
-        <ul class="nav navbar-nav ml-auto w-100 justify-content-end" style="margin-right: 10%">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ auth.user.username }}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ path_for('user.profile') }}">Profile</a>
-                    <a class="dropdown-item" href="{{ path_for('auth.password.change') }}">Change password</a>
-                    <a class="dropdown-item" href="{{ path_for('auth.signout') }}">Sign Out</a>
-                </div>
+
+<nav class="navbar">
+    <div class="logo_wrapper">
+            <a href="{{ path_for('home') }}" class="logo">Matcha</a>
+    </div>   
+
+    <div class="nav_buttons">
+      {% if auth.check %}
+        <div class="link_wrapper link_wrapper_1"><a class="button is-link" href="{{ path_for('search') }}">Search</a></div>
+        {% if auth.is_filled %}
+          <div class="link_wrapper link_wrapper_2 notifications_alarm_wrapper"><a class="button is-link" href="{{ path_for('user.notifications') }}">Notifications</a>
+          <div class="link_wrapper link_wrapper_2"><div class="notifications_alarm"><span class="icon "><i class="fas fa-envelope"></i></span><div id="notifications_count"></div></div></div></div>
+          <div class="link_wrapper link_wrapper_2"><a class="button is-link" href="{{ path_for('user.browsing_history') }}">Browsing history</a></div>
+          <div class="link_wrapper link_wrapper_2"><a class="button is-link" href="{{ path_for('chats') }}">Chats</a></div>
+        {% endif %} 
+      </div>
+      <div class="user_wrapper">
+        <div class="login_wrapper_user">
+          <div class="dropdown is-hoverable">
+            <div class="dropdown-trigger">
+              <button class="button is-info" aria-haspopup="true" aria-controls="dropdown-menu4">
+              <span data-id="{{ auth.user.id }}">{{ auth.user.username }}</span>
+              <span class="icon is-small">
+                <i class="fas fa-angle-down" aria-hidden="true"></i>
+              </span>
+              </button>
             </div>
-        </ul>
+            <div class="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <div class="dropdown-item">
+                    <div class="dropdown_menu_list">
+                      <a class="dropdown_menu_item" href="{{ path_for('user.profile') }}">Profile</a>
+                      <a class="dropdown_menu_item" href="{{ path_for('auth.password.change') }}">Change password</a>
+                      {% if auth.is_filled %}       
+                        <a class="dropdown_menu_item" href="{{ path_for('user.blacklist') }}">Blacklist</a>
+                      {% endif %} 
+                      <a class="dropdown_menu_item" href="{{ path_for('auth.signout') }}">Sign Out</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+         </div>
         {% else %}
-        <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path_for('auth.signin') }}">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path_for('auth.signup') }}">Sign Up</a>
-            </li>
-        </ul>
-        {% endif %}
+        <div class="login_wrapper_buttons">
+            <a class="button is-info" href="{{ path_for('auth.signin') }}">Login</a>
+            <a class="button is-info" href="{{ path_for('auth.signup') }}">Sign Up</a>
+        </div>
+      {% endif %}
     </div>
 </nav>

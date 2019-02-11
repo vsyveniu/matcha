@@ -1,55 +1,63 @@
 {% extends 'templates/app.twig' %}
 
 {% block content %}
-<div class="container-fluid bg-light py-3">
-    <div class="row">
-        <div class="col-md-6 mx-auto">
-                <div class="card card-body">
-                    <h3 class="text-center mb-4">Sign up</h3>
+
+                <div class="sign-up_wrapper">
+                    <h3 class="sign_in_form_label">Sign up</h3>
                     <form action="{{ path_for('auth.signup') }}" method="post" autocomplete="off">
-                        <div class="form-group">
-                            <input class="form-control{{errors.username ? ' is-invalid' : '' }}" placeholder="Username" name="username" value="{{ old.username }}" type="text">
+                        <div class="field">
+                            <div class="control"> 
+                                <label>Username must contain only latinic letters or digits</label>
+                            <input class="form-control{{errors.username ? ' is-invalid' : '' }} input" required="required" pattern="[a-zA-Z0-9]+" placeholder="Username" name="username" value="{{ old.username }}" type="text">
+                            </div>
                             {% if errors.username %}
-                                <div class="invalid-feedback">{{ errors.username }}</div>
+                                <div >{{ errors.username }}</div>
                             {% endif %}
                         </div>
-                        <div class="form-group">
-                            <input class="form-control{{errors.email ? ' is-invalid' : '' }}" placeholder="E-mail Address" name="email" type="text" value="{{ old.email }}">
+                        <div class="field">
+                            <div class="control">
+                            <input class="form-control{{errors.email ? ' is-invalid' : '' }} input" required="required" type="email" placeholder="E-mail Address" name="email"  value="{{ old.email }}">
+                            </div>
                             {% if errors.email %}
-                                <div class="invalid-feedback">{{ errors.email }}</div>
+                                <div >{{ errors.email }}</div>
                             {% endif %}
                         </div>
-                        <div class="form-group">
-                            <input class="form-control{{errors.firstName ? ' is-invalid' : '' }}" placeholder="First name" name="firstName" value="{{ old.firstName }}" type="text">
+                        <div class="field">
+                            <div class="control">
+                                  <label>Username must contain only latinic letters or digits</label>
+                            <input class="form-control{{errors.firstName ? ' is-invalid' : '' }} input" required="required" pattern="[a-zA-Z0-9]+" placeholder="First name" name="firstName" value="{{ old.firstName }}" type="text">
+                            </div>
                             {% if errors.firstName %}
-                                <div class="invalid-feedback">{{ errors.firstName }}</div>
+                                <div >{{ errors.firstName }}</div>
                             {% endif %}
                         </div>
-                        <div class="form-group">
-                            <input class="form-control{{errors.lastName ? ' is-invalid' : '' }}" placeholder="Last name" name="lastName" value="{{ old.lastName }}" type="text">
+                        <div class="field">
+                            <div class="control">
+                                  <label>Username must contain only latinic letters or digits</label>
+                            <input class="form-control{{errors.lastName ? ' is-invalid' : '' }} input" required="required" pattern="[a-zA-Z0-9]+"  placeholder="Last name" name="lastName" value="{{ old.lastName }}" type="text">
+                            </div>
                             {% if errors.lastName %}
-                                <div class="invalid-feedback">{{ errors.lastName }}</div>
+                                <div >{{ errors.lastName }}</div>
                             {% endif %}
                         </div>
-                        <div class="form-group">
-                            <input class="form-control{{errors.password ? ' is-invalid' : '' }}" placeholder="Password" name="password" value="" type="password">
+                        <div class="field">
+                            <div class="control">
+                                 <label >Password must contain at least 1 difit, 1 uppercase letter and 1 lowercase letter, it must be 6+ symbols</label>
+                            <input class="form-control{{errors.password ? ' is-invalid' : '' }} input" required="required" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,}$"   placeholder="Password" name="password" value="" type="password">
+                            </div>
                             {% if errors.password %}
-                                <div class="invalid-feedback">{{ errors.password }}</div>
+                                <div >{{ errors.password }}</div>
                             {% endif %}
                         </div>
-                        <div class="form-group">
-                            <input class="form-control{{errors.confirmPassword ? ' is-invalid' : '' }}" placeholder="Confirm Password" name="confirmPassword" value="" type="password">
+                        <div class="field">
+                            <div class="control">
+                            <input class="form-control{{errors.confirmPassword ? ' is-invalid' : '' }} input" required="required" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,}$" placeholder="Confirm Password" name="confirmPassword" value="" type="password">
+                            </div>
                             {% if errors.confirmPassword %}
-                                <div class="invalid-feedback">{{ errors.confirmPassword }}</div>
+                                <div >{{ errors.confirmPassword }}</div>
                             {% endif %}
                         </div>
-                        <div class="checkbox">
-                            <label class="small">
-                                <input name="terms" type="checkbox">I have read and agree to the <a href="#">terms of service</a>
-                            </label>
-                        </div>
-                        <input class="btn btn-lg btn-primary btn-block" value="Sign Me Up" type="submit">
+                        <input class="button is-primary" value="Sign Me Up" type="submit">
                     </form>
                 </div>
-        </div>
 {% endblock %}

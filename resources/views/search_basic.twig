@@ -1,0 +1,16 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+    <div id="toTop"> ^ Back to top</div>
+    <section class="gallery_response_style" id="gallery_response"></section>
+    <div id="form_status"></div>
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+
+
+    <script src="{{base_url()}}/public/js/basic_searchgeo.js"></script>
+
+    
+{% endblock %}
+ 

@@ -1,5 +1,4 @@
 <?php
-// DIC configuration
 
 $container = $app->getContainer();
 
@@ -28,7 +27,6 @@ $container['upload_directory'] = $_SERVER['DOCUMENT_ROOT'].'/matcha/app/users_ph
 $container['view'] = function ($container) {
 	$view = new \Slim\Views\Twig(__DIR__.'/../resources/views', [
 		'cache' => false,
-		'debug' => true
 	]);
 
 	$view->addExtension(new \Slim\Views\TwigExtension(
@@ -37,6 +35,37 @@ $container['view'] = function ($container) {
 	));
 
 	return $view;
+};
+
+$container['fake'] = function($container) {
+	return new \App\Models\Fake($container);
+};
+
+$container['blocked'] = function($container) {
+	return new \App\Models\Blocked($container);
+};
+
+$container['people'] = function($container) {
+	return new \App\Config\People($container);
+};
+
+$container['search'] = function($container) {
+	return new \App\Models\Search($container->db);
+};
+$container['BasicSearch'] = function($container) {
+	return new \App\Models\BasicSearch($container->db);
+};
+
+$container['chat_messages'] = function($container) {
+	return new \App\Models\ChatMessages($container);
+};
+
+$container['chats'] = function($container) {
+	return new \App\Models\chats($container);
+};
+
+$container['notification'] = function($container) {
+	return new \App\Models\Notification($container);
 };
 
 $container['user'] = function($container) {
@@ -55,10 +84,6 @@ $container['likes'] = function($container) {
 	return new \App\Models\Likes($container);
 };
 
-$container['search'] = function($container) {
-	return new \App\Models\Search($container->db);
-};
-
 $container['tag'] = function($container) {
 	return new \App\Models\Tag($container);
 };
@@ -67,8 +92,20 @@ $container['fame_rating'] = function($container) {
 	return new \App\Models\FameRating($container);
 };
 
+$container['ChatsController'] = function($container) {
+	return new \App\Controllers\User\ChatsController($container);
+};
+
+$container['BrowsingHistoryController'] = function($container) {
+	return new \App\Controllers\User\BrowsingHistoryController($container);
+};
+
 $container['validator'] = function($container) {
 	return new \App\Validation\Validator($container);
+};
+
+$container['TestController'] = function($container) {
+	return new \App\Controllers\TestController($container);
 };
 
 $container['HomeController'] = function($container) {
@@ -111,15 +148,8 @@ $container['photos'] = function($container) {
 	return new \App\Profile\Photos($container);
 };
 
-$container['TestController'] = function($container) {
-	return new \App\Controllers\TestController($container);
-};
-
 $container['geo'] = function() {
 	return new \App\Config\Geo();
-};
-$container['people'] = function() {
-	return new \App\Config\People();
 };
 
 $container['GeoController'] = function($container) {
@@ -133,6 +163,9 @@ $container['NotificationController'] = function($container) {
 $container['SearchController'] = function($container) {
 	return new \App\Controllers\User\SearchController($container);
 };
+$container['BasicsearchController'] = function($container) {
+	return new \App\Controllers\User\BasicsearchController($container);
+};
 
 $container['ShowProfileController'] = function($container) {
 	return new \App\Controllers\User\ShowProfileController($container);
@@ -141,5 +174,4 @@ $container['ShowProfileController'] = function($container) {
 $container['TagsController'] = function($container) {
 	return new \App\Controllers\User\TagsController($container);
 };
-
 

@@ -1,71 +1,9 @@
-$(document).ready(function(){
-  $('#country').change(function(){
-    loadState($(this).find(':selected').val())
-  })
 
-  $('#state').change(function(){
-    loadCity($(this).find(':selected').val())
-  })
-
-})
 
 var getUrl = window.location;
 var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 
-function loadCountry(){
-    $.ajax({
-        type: "POST",
-        url: baseUrl + '/getCountry',
-        data: "get=country"
-        }).done(function(result) {
-            result = JSON.parse(result);
-            $(result).each(function(){
-                $("#country").append($('<option>', {
-                    value: this.id + ':' + this.name,
-                    text: this.name,
-                }));
-            })
-        });
-}
 
-function loadState(countryId){
-    $("#state").children().remove()
-    $("#city").children().remove()
-    $("#state").append($('<option selected value>'))
-    $.ajax({
-        type: "POST",
-        url: baseUrl + '//getCountry',
-        data: "get=state&countryId=" + countryId
-        }).done(function(result) {
-            result = JSON.parse(result);
-            $(result).each(function(){
-                $("#state").append($('<option>', {
-                    value: this.id + ':' + this.name,
-                    text: this.name,
-                }));
-            })
-        });
-}
-
-function loadCity(stateId){
-    $("#city").children().remove()
-    $("#city").append($('<option selected value>'))
-    $.ajax({
-        type: "POST",
-        url: baseUrl + '/getCountry',
-        data: "get=city&stateId=" + stateId
-        }).done(function(result) {
-            result = JSON.parse(result);
-            $(result).each(function(){
-                $("#city").append($('<option>', {
-                    value: this.id + ':' + this.name,
-                    text: this.name,
-                }));
-            })
-        });
-}
-
-loadCountry();
 
 
 var map, infoWindow, mark, pos, positionfrombase, latLng;
@@ -92,7 +30,6 @@ function initMap()
         if (xhr.readyState == 4)
         {
           positionfrombase = JSON.parse(xhr.responseText);
-         // document.getElementById('fuck').innerHTML = xhr.responseText;
          
           infoWindow = new google.maps.InfoWindow;
           if (navigator.geolocation)
@@ -193,17 +130,25 @@ function initMap()
 
     }
 
-// send coords which user has manually set.
-// Sending by using ajax requset and store coords values  in formdata. This coords must be saved into database
-if(document.getElementById('manset_location'))
+$(document).ready(function() {
+ enableSetAuto();
+});
+
+
+function enableSetAuto(){
+      document.getElementById("autoset_location").disabled = true;
+      setTimeout(function(){document.getElementById("autoset_location").disabled = false;},4000);
+  }
+
+
+
+var manset_location = document.getElementById('manset_location');
+if( manset_location )
 {
-  var manual_geo_data = new Vue({
-    el: '#manset_location',
-    methods:
-    {
-      savePosition: function(event)
-      {
-        console.log('fuck');
+
+  manset_location.onclick = function(e)
+  {
+     e.preventDefault();
         if(mark)
         {
           var xhr = new XMLHttpRequest;
@@ -228,20 +173,18 @@ if(document.getElementById('manset_location'))
         {
           document.getElementById('map_message').innerHTML = "No marker has been added";
         }
-      }
-    }
-
-  })
+  }
 }
-if(document.getElementById('autoset_location'))
-{
-  var auto_geo_data = new Vue({
-    el: '#autoset_location',
-    methods:
-    {
-      AutosavePosition: function(event)
-      {
 
+
+
+var autoset_location = document.getElementById('autoset_location');
+
+if( autoset_location)
+{
+     autoset_location.onclick = function(e)
+      {
+          e.preventDefault();
           var xhr = new XMLHttpRequest;
           var formdata = new FormData();
           formdata.append("method", "position");
@@ -255,22 +198,21 @@ if(document.getElementById('autoset_location'))
             if (xhr.readyState == 4)
             {
               document.getElementById('map_message').innerHTML = "Your location was autoupdated";
-               document.getElementById('lat_lng').innerHTML = xhr.responseText;
+               document.getElementById('lat_lng').innerHTML = "";
               infoWindow.setPosition(pos);
               infoWindow.setContent('You are here');
               infoWindow.open(map);
               map.setCenter(pos);
               if(mark)
+              {
                 mark.setMap(null);
+                mark = null;
+              }
               map.setZoom(6);
             }
           }
       }
-    }
-
-  })
 }
-
 
 function sendCoords(lat, lng)
 {
@@ -285,13 +227,9 @@ function sendCoords(lat, lng)
           {   
             if(xhr.readyState == 4)
             {
-             console.log('OK');
-                document.getElementById('lat_lng').innerHTML = xhr.responseText;
+               // document.getElementById('lat_lng').innerHTML = xhr.responseText;
              ;
 
             }
           }
 }
-
-
-

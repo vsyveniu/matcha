@@ -11,7 +11,7 @@ return [
         'db' => [
             'host' => 'localhost',
             'username' => 'root',
-            'password' => '423ps4212',
+            'password' => '123456',
             'dbname' => 'matcha',
         ],
         // Monolog settings

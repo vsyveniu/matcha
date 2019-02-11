@@ -45,4 +45,21 @@ class NotificationSocket extends BaseSocket {
     }
 }
 
+use Ratchet\Server\IoServer;
+use Ratchet\Http\HttpServer;
+use Ratchet\WebSocket\WsServer;
+use App\Socket\NotificationSocket;
+
+
+$server = IoServer::factory(
+    new HttpServer(
+        new WsServer(
+            new NotificationSocket()
+        )
+    ),
+    8585
+);
+
+$server->run();
+
 ?>

@@ -2,35 +2,36 @@
 
 {% block content %}
 
-<div id="notification">
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a v-bind:class="wached" href="javascript:void(0);" @click="switchTabs">Who wached my profile</a>
-    </li>
-    <li class="nav-item">
-      <a v-bind:class="browsing" href="javascript:void(0);" @click="switchTabs">Browsing history</a>
-    </li>
-    <li class="nav-item">
-      <a v-bind:class="liked" href="javascript:void(0);" @click="switchTabs">Who liked me</a>
-    </li>
-    <li class="nav-item">
-      <a v-bind:class="likes" href="javascript:void(0);" @click="switchTabs">My likes</a>
-    </li>
-  </ul>
+<div id="toTop">^ back to top</div>
+{% if notifications %}
+    <div class="delete_not_button"><button  class="button is-info" id="delete_all_notifications">Delete all</button></div>
+ {% endif %}   
 
-  <form action="{{ path_for('user.notifications') }}" method="post">
-    <input class="btn btn-lg btn-primary btn-block" value="Delete" type="submit">
-    <table class="table table-borderless">
-      <tbody id="data">
-      </tbody>
-    </table>
-  </form>
 
+<div id="notification" class="notifications_container">
+	{% for notification in notifications %}
+		<div class="box each_notification" data-id="{{notification.id}}" style="display:none">
+			{% if notification.viewed %}
+				<div class="viewed"></div>
+			{% else %}
+				<div class="not-viewed">
+					<button class="button is-light is-small viewed_button">Mark as viewed</button>
+				</div>
+			{% endif %}	
+			<div>
+				<a href="{{base_url()}}/show?profile={{notification.uid}}">{{notification.firstName}} {{notification.lastName}}</a>
+			</div>
+			<div>{{notification.text}}</div>
+			<div>{{notification.time}}</div>
+			<button class="delete_notification delete is-medium">Delete</button>
+		</div>
+	{% endfor %}
 </div>
-
+	
 {% endblock %}
 {% block javascript %}
     {{ parent() }}
-           <script src="{{base_url()}}/public/js/main.js"></script>
+
+    <script src="{{base_url()}}/public/js/notifications.js"></script>
+
 {% endblock %}
-     

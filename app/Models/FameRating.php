@@ -13,7 +13,7 @@ class FameRating {
 		$id = $this->findFameId($user_id);
 		if(!$id)
 			$this->newUser($user_id);
-		else if($this->getRating($user_id) < 100) {
+		else if($this->getRating($user_id) < 2147483647) {
 			$sql = "UPDATE `fame_rating` 
 					SET `rating` = `rating` + 1
 					WHERE `user_id` = :user_id";

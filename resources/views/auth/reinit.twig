@@ -1,0 +1,37 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+<div class="signin_wrapper">
+
+                <h3 class="sign_in_form_label">Restore password</h3>
+                <form action="{{ path_for('auth.reinit') }}" method="post" autocomplete="off">
+                    <div class="field">
+                        <div class="control">
+                             <label>Username must contain only latinic letters or digits</label>
+                            <input class="form-control{{errors.username ? ' is-invalid' : '' }} input" required="required" pattern="[a-zA-Z0-9]+"  placeholder="Username" name="username" type="text" value="{{ old.username }}">
+                            {% if errors.username %}
+                                <div class="invalid-feedback">{{ errors.username }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <input class="form-control{{errors.password ? ' is-invalid' : '' }} input" required="required" placeholder="Email" name="email" value="" type="email">
+                            {% if errors.email %}
+                                <div class="invalid-feedback">{{ errors.email }}</div>
+                            {% endif %}
+                         </div>   
+                    </div>
+                     <div class="field">
+                            <div class="control">
+                                 <label >Password must contain at least 1 difit, 1 uppercase letter and 1 lowercase letter, it must be 6+ symbols</label>
+                            <input class="form-control{{errors.newPassword ? ' is-invalid' : '' }} input" required="required" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,}$" placeholder="New Password" name="newPassword" value="" type="password">
+                            </div>
+                            {% if errors.confirmPassword %}
+                                <div class="invalid-feedback">{{ errors.confirmPassword }}</div>
+                            {% endif %}
+                        </div>
+                    <input class="button is-primary" value="restore password" type="submit">
+                </form>
+</div>        
+{% endblock %}
